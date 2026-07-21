@@ -6,9 +6,9 @@ import Contacts from "./pages/Contacts";
 import Responses from "./pages/Responses";
 import Reports from "./pages/Reports";
 
-import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import History from "./pages/History";
+import Navbar from "./components/Navbar";
 function App() {
   return (
     <BrowserRouter>
@@ -16,7 +16,7 @@ function App() {
         <Sidebar />
 
         <div className="flex-1">
-          <Navbar />
+            <Navbar/>
           <div className="p-6">
             <Routes>
               <Route path="/" element={<Dashboard />} />
