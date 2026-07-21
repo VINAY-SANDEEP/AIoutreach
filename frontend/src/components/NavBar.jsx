@@ -1,6 +1,6 @@
 import { Mic, Bell, UserCircle } from "lucide-react";
 
-export default function NavBar() {
+export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-gray-200 shadow-sm">
       <div className="max-w-7xl mx-auto h-20 px-6 flex items-center justify-between">

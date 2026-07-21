@@ -8,7 +8,7 @@ import Reports from "./pages/Reports";
 
 import Sidebar from "./components/Sidebar";
 import History from "./pages/History";
-import Navbar from "./components/NavBar";
+import Navbar from "./components/Navbar";
 function App() {
   return (
     <BrowserRouter>
@@ -16,7 +16,7 @@ function App() {
         <Sidebar />
 
         <div className="flex-1">
-            <NavBar/>
+            <Navbar/>
           <div className="p-6">
             <Routes>
               <Route path="/" element={<Dashboard />} />
