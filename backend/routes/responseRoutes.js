@@ -3,7 +3,7 @@ const router = express.Router();
 
 const {
   getResponses,
-} = require("../controllers/responseController");
+} = require("../controllers/ResponseController");
 
 router.get("/", getResponses);
 
