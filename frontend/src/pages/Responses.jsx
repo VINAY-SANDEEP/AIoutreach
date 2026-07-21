@@ -10,7 +10,9 @@ import {
   FileText,
 } from "lucide-react";
 
-const API = "http://localhost:5000/api/responses";
+import { API_BASE_URL } from "../config";
+
+const API = `${API_BASE_URL}/api/responses`;
 
 export default function Responses() {
   const [responses, setResponses] = useState([]);
@@ -23,22 +25,26 @@ export default function Responses() {
   const fetchResponses = async () => {
     try {
       const res = await axios.get(API);
-      setResponses(res.data.data);
+      setResponses(res.data?.data || []);
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      setResponses([]);
     }
   };
 
   const exportExcel = () => {
-    window.open("http://localhost:5000/api/export");
+    window.open(`${API_BASE_URL}/api/export`);
   };
 
-  const filtered = responses.filter((item) => {
+  const filtered = (responses || []).filter((item) => {
+    if (!item) return false;
     const transcript = item.transcript || "";
+    const name = item.name || "";
+    const phone = item.phone || "";
 
     return (
-      item.name.toLowerCase().includes(search.toLowerCase()) ||
-      item.phone.includes(search) ||
+      name.toLowerCase().includes(search.toLowerCase()) ||
+      phone.includes(search) ||
       transcript.toLowerCase().includes(search.toLowerCase())
     );
   });

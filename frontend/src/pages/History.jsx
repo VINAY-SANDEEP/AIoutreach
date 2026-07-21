@@ -9,6 +9,8 @@ import {
   User,
 } from "lucide-react";
 
+import { API_BASE_URL } from "../config";
+
 export default function History() {
   const [history, setHistory] = useState([]);
   const [search, setSearch] = useState("");
@@ -19,17 +21,19 @@ export default function History() {
 
   const loadHistory = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/history");
-      setHistory(res.data.data);
+      const res = await axios.get(`${API_BASE_URL}/api/history`);
+      setHistory(res.data?.data || []);
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      setHistory([]);
     }
   };
 
-  const filteredHistory = history.filter(
+  const filteredHistory = (history || []).filter(
     (item) =>
-      item.name.toLowerCase().includes(search.toLowerCase()) ||
-      item.phone.includes(search)
+      item &&
+      ((item.name && item.name.toLowerCase().includes(search.toLowerCase())) ||
+        (item.phone && item.phone.includes(search)))
   );
 
   return (

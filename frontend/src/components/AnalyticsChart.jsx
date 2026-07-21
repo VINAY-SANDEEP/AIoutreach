@@ -9,13 +9,14 @@ import {
   Cell,
 } from "recharts";
 
-export default function AnalyticsChart({ data }) {
+export default function AnalyticsChart({ data = {} }) {
+  const safeData = data || {};
   const chartData = [
-    { name: "Roads", value: data.Roads || 0 },
-    { name: "Water", value: data.Water || 0 },
-    { name: "Drainage", value: data.Drainage || 0 },
-    { name: "Electricity", value: data.Electricity || 0 },
-    { name: "Other", value: data.Other || 0 },
+    { name: "Roads", value: safeData.Roads || 0 },
+    { name: "Water", value: safeData.Water || 0 },
+    { name: "Drainage", value: safeData.Drainage || 0 },
+    { name: "Electricity", value: safeData.Electricity || 0 },
+    { name: "Other", value: safeData.Other || 0 },
   ];
 
   const colors = [

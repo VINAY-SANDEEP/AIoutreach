@@ -9,7 +9,9 @@ import {
   Clock,
 } from "lucide-react";
 
-const API = "http://localhost:5000/api/contacts";
+import { API_BASE_URL } from "../config";
+
+const API = `${API_BASE_URL}/api/contacts`;
 
 export default function Contacts() {
   const [contacts, setContacts] = useState([]);
@@ -18,9 +20,10 @@ export default function Contacts() {
   const fetchContacts = async () => {
     try {
       const res = await axios.get(API);
-      setContacts(res.data.contacts);
+      setContacts(res.data?.contacts || []);
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      setContacts([]);
     }
   };
 
@@ -35,14 +38,15 @@ export default function Contacts() {
       await axios.delete(`${API}/${id}`);
       fetchContacts();
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
-  const filteredContacts = contacts.filter(
+  const filteredContacts = (contacts || []).filter(
     (c) =>
-      c.name.toLowerCase().includes(search.toLowerCase()) ||
-      c.phone.includes(search)
+      c &&
+      ((c.name && c.name.toLowerCase().includes(search.toLowerCase())) ||
+        (c.phone && c.phone.includes(search)))
   );
 
   return (

@@ -8,7 +8,9 @@ import {
   FolderOpen,
 } from "lucide-react";
 
-const API = "http://localhost:5000/api/upload/excel";
+import { API_BASE_URL } from "../config";
+
+const API = `${API_BASE_URL}/api/upload/excel`;
 
 export default function Upload() {
   const [file, setFile] = useState(null);

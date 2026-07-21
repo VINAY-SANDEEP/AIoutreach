@@ -17,8 +17,10 @@ import {
 } from "lucide-react";
 import AnalyticsChart from "../components/AnalyticsChart";
 
-const API = "http://localhost:5000/api/dashboard";
-const CALL_API = "http://localhost:5000/api/call/start";
+import { API_BASE_URL } from "../config";
+
+const API = `${API_BASE_URL}/api/dashboard`;
+const CALL_API = `${API_BASE_URL}/api/call/start`;
 
 export default function Dashboard() {
   const [data, setData] = useState({});
@@ -27,18 +29,30 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
 
   const fetchDashboard = async () => {
-    const res = await axios.get(API);
-    setData(res.data);
+    try {
+      const res = await axios.get(API);
+      setData(res.data || {});
+    } catch (err) {
+      console.error("Error fetching dashboard:", err);
+    }
   };
 
   const fetchAnalytics = async () => {
-    const res = await axios.get("http://localhost:5000/api/analytics");
-    setAnalytics(res.data);
+    try {
+      const res = await axios.get(`${API_BASE_URL}/api/analytics`);
+      setAnalytics(res.data || {});
+    } catch (err) {
+      console.error("Error fetching analytics:", err);
+    }
   };
 
   const loadSummary = async () => {
-    const res = await axios.get("http://localhost:5000/api/summary");
-    setSummary(res.data.summary);
+    try {
+      const res = await axios.get(`${API_BASE_URL}/api/summary`);
+      setSummary(res.data?.summary || {});
+    } catch (err) {
+      console.error("Error loading summary:", err);
+    }
   };
 
   useEffect(() => {
@@ -55,14 +69,20 @@ export default function Dashboard() {
     try {
       await axios.post(CALL_API);
       fetchDashboard();
+    } catch (err) {
+      console.error("Error starting campaign:", err);
     } finally {
       setLoading(false);
     }
   };
 
   const stopCampaign = async () => {
-    await axios.post("http://localhost:5000/api/call/stop");
-    fetchDashboard();
+    try {
+      await axios.post(`${API_BASE_URL}/api/call/stop`);
+      fetchDashboard();
+    } catch (err) {
+      console.error("Error stopping campaign:", err);
+    }
   };
 
   const total = data.totalContacts || 0;
