@@ -21,6 +21,16 @@ app.use(express.json());
 app.use(cors());
 app.use(express.json());
 
+const fs = require("fs");
+
+// Ensure required directories exist
+const requiredDirs = ["uploads", "public/audio"];
+requiredDirs.forEach((dir) => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+});
+
 // Serve generated audio files
 app.use("/audio", express.static("public/audio"));
 

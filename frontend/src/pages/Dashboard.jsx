@@ -18,7 +18,6 @@ import {
 import AnalyticsChart from "../components/AnalyticsChart";
 
 import { API_BASE_URL } from "../config";
-
 const API = `${API_BASE_URL}/api/dashboard`;
 const CALL_API = `${API_BASE_URL}/api/call/start`;
 

@@ -47,6 +47,15 @@ exports.uploadExcel = async (req, res) => {
   } catch (err) {
     console.error(err);
 
+    // Clean up uploaded file on error
+    if (req.file && req.file.path && fs.existsSync(req.file.path)) {
+      try {
+        fs.unlinkSync(req.file.path);
+      } catch (unlinkErr) {
+        console.error("Failed to delete file on error:", unlinkErr);
+      }
+    }
+
     res.status(500).json({
       success: false,
       message: err.message

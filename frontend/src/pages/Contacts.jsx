@@ -35,7 +35,7 @@ export default function Contacts() {
     if (!window.confirm("Delete this contact?")) return;
 
     try {
-      await axios.delete(`${API}/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/contacts/${id}`);
       fetchContacts();
     } catch (err) {
       console.error(err);
